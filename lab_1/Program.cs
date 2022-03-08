@@ -8,7 +8,7 @@ namespace lab_1
         {
             /*Person person = new Person() { FirstName = "A" };
             Console.WriteLine(person.FirstName);*/
-            Money money = Money.Of(0, (Currency)1);
+            Money money = Money.Of("13,95", (Currency)1);
         }
     }
 
@@ -57,35 +57,54 @@ namespace lab_1
             EUR = 3
         }
 
-        public class Money
+    public class Money
+    {
+        private readonly decimal _value;
+        private readonly string _valueStr;
+        private readonly Currency _currency;
+
+        public decimal Value
         {
-            private readonly decimal _value;
-            private readonly Currency _currency;
-
-            private Money(decimal value, Currency currency)
-            {
-                _value = value;
-                _currency = currency;
-            }
-
-            public static Money Of(decimal value, Currency currency)
-            {
-                if(value > 0)
-                {
-                    return new Money(value, currency);
-                }
-                //return value < 0 ? null : new Money(value, currency);
-                else
-                {
-                    throw new ArgumentOutOfRangeException("Podaj wartość dodatnią");
-                }
-            }
-
-            public static Money operator*(Money money, decimal value)
-            {
-                return Money.Of(money._value * value, money._currency);
-            }
+            get { return _value; }
         }
 
+        public string ValueStr
+        {
+            get { return _valueStr;  }
+        }
 
+        public Currency Currency
+        {
+            get { return _currency; }
+        }
+
+        private Money(decimal value, Currency currency)
+        {
+             _value = value;
+             _currency = currency;
+        }
+
+        private Money(string valueStr, Currency currency)
+        {
+            _valueStr = valueStr;
+            _currency = currency;
+        }
+
+        public static Money Of(decimal value, Currency currency)
+        {
+            return value < 0 ? null : new Money(value, currency);
+        }
+
+        public static Money Of(string valueStr, Currency currency)
+        {
+            return valueStr == "13,95" ? null : new Money(valueStr, currency);
+        }
+
+        public static Money operator*(Money money, decimal factor)
+        {
+            return new Money(money.Value * factor, money.Currency);
+        }
     }
+
+
+}
