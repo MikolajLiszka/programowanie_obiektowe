@@ -2,14 +2,14 @@
 
 namespace lab_1
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            /*Person person = new Person() { FirstName = "A" };
-            Console.WriteLine(person.FirstName);*/
-            //Money money = Money.Of("13,95", (Currency)1);
+            Money money = Money.Of(45.67m, Currency.EUR);
+            Console.WriteLine($"{money}");
         }
+    }
 
 
         public class Person
@@ -121,12 +121,26 @@ namespace lab_1
                 return a.Value > b.Value;
             }
 
-            public static explicit operator double(Money money)
+            public static explicit operator float(Money money)
             {
                 return (float)money.Value;
             }
 
         }
+
+        public static class MoneyExtension
+        {
+            public static Money Percent(this Money money, decimal percent)
+            {
+                return Money.Of((money.Value * percent) / 100m, money.Currency) ?? throw new ArgumentException();
+            }
+
+            public static Money ToCurrency(this Money money, decimal factor, Currency currency)
+            {
+                 return Money.Of(money.Value * factor, currency) ?? throw new ArgumentException();
+            }
+        }
+
 
         public class Tank
         {
@@ -160,20 +174,6 @@ namespace lab_1
                     _level = value;
                 }
             }
-
-            /*public bool refuel(int amount)
-            {
-                if (amount < 0)
-                {
-                    return false;
-                }
-                if (_level + amount > Capacity)
-                {
-                    return false;
-                }
-                _level += amount;
-                return true;
-            }*/
 
             public bool consume(int amount)
             {
@@ -219,5 +219,5 @@ namespace lab_1
 
         }
     }
-}
+
 
