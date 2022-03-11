@@ -6,49 +6,53 @@ namespace lab_1
     {
         static void Main(string[] args)
         {
-            Money money = Money.Of(45.67m, Currency.EUR);
-            Console.WriteLine($"{money}");
+            var money1 = Money.Of((decimal)13.12, Currency.PLN);
+            var money2 = Money.Of((decimal)18.34, Currency.PLN);
+
+            Console.WriteLine(money1);
+            Console.WriteLine(money2);
+
         }
     }
 
 
-        public class Person
+    public class Person
+    {
+        private string _firstName;
+
+        private Person(string firstName)
         {
-            private string _firstName;
+            _firstName = firstName;
+        }
 
-            private Person(string firstName)
+        public static Person of(string firstName)
+        {
+            if (firstName.Length <= 2)
             {
-                _firstName = firstName;
+                return new Person(firstName);
             }
-
-            public static Person of(string firstName)
+            else
             {
-                if (firstName.Length <= 2)
-                {
-                    return new Person(firstName);
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("Imię jest zbyt krótkie");
+                throw new ArgumentOutOfRangeException("Imię jest zbyt krótkie");
 
-                }
             }
+        }
 
-            public string FirstName
+        public string FirstName
+        {
+            get
             {
-                get
+                return _firstName;
+            }
+            set
+            {
+                if (value.Length >= 2)
                 {
-                    return _firstName;
-                }
-                set
-                {
-                    if (value.Length >= 2)
-                    {
-                        _firstName = value;
-                    }
+                    _firstName = value;
                 }
             }
         }
+    }
 
         public enum Currency
         {
@@ -58,7 +62,8 @@ namespace lab_1
         }
 
         public class Money
-        {
+        { 
+ 
             private readonly decimal _value;
             private readonly Currency _currency;
 
