@@ -2,15 +2,21 @@
 
 namespace lab_1
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            var money1 = Money.Of((decimal)13.12, Currency.PLN);
-            var money2 = Money.Of((decimal)18.34, Currency.PLN);
+            var money1 = Money.Of((decimal)13.12, Currency.USD);
+            var money2 = Money.Of((decimal)18.34, Currency.USD);
 
-            Console.WriteLine(money1);
-            Console.WriteLine(money2);
+            Console.WriteLine(($"{money1}"));
+            Console.WriteLine(($"{money2}"));
+
+            Console.WriteLine(money1 > money2);
+            Console.WriteLine(money1 < money2);
+
+            Console.WriteLine(money1.Percent(20));
+            Console.WriteLine(money2.ToCurrency((decimal)4.1, Currency.PLN));
 
         }
     }
@@ -207,20 +213,7 @@ namespace lab_1
                 }
                 _level += amount;
             }
-
-            /*public bool refuel(Tank sourcetank, int amount)
-            {
-                if (amount < 0)
-                {
-                    return false;
-                }
-                if (_level + amount > Capacity)
-                {
-                    return false;
-                }    
-
-            }
-            */
+            
 
         }
     }
