@@ -34,6 +34,13 @@ namespace WpfApp1
             XDocument doc = XDocument.Parse(xml);
             //zamienic xml na słownik rekordow Rate
         }
+
+        private void DownloadJsonData()
+        {
+            WebClient client = new WebClient();
+            client.Headers.Add("Content-Type", "application/json");
+            string json = client.DownloadString("http://api.nbp.pl/api/exchangerate/")
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -62,6 +69,15 @@ namespace WpfApp1
         private void NumberValidation(object sender, TextCompositionEventArgs e)
         {    
             e.Handled = !decimal.TryParse(e.Text, out decimal value);
+
+        }
+
+        public class RateTable 
+        {
+            public string table { get; set; }
+
+            public string no { get; set; }
+
 
         }
     }

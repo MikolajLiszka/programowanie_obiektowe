@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace lab_7_zadania
 {
@@ -209,23 +210,31 @@ namespace lab_7_zadania
         //Zwróć wartość delegata typu Func, który zwraca powtórzony łańcuch (pierwszy argument) n razy (drugi argument) 
         public static Func<string, int, string> Repeat()
         {
-            //usuń zgłoszenie wyjątku i wpisz rozwiązanie
-            throw new NotImplementedException();
+            return delegate (string s, int n)
+            {
+                string result = "";
+                for (int i = 0; i < n; i++)
+                {
+                    result += s;
+                }
+                return result;
+            };
         }
 
         //Zadanie 5
         //zwroć w metodzie lambdę, która wyświetla na konsoli przekazany łańcuch wielkimi literami
         public static Action<string> StringConsumer()
         {
-            //usuń zgłoszenie wyjątku i wpisz rozwiązanie
-            throw new NotImplementedException();
+            return delegate (string s)
+            {
+                Console.WriteLine(s.ToUpper());
+            };
         }
         //Zadanie 6
         //zwroć w metodzie lambdę, która zwraca argument podniesiony do kwadratu
         public static Func<double, double> DoubleFunction()
         {
-            //usuń zgłoszenie wyjątku i wpisz rozwiązanie
-            throw new NotImplementedException();
+            return a => a * a;
         }
         //Zadanie 7
         //zwróć w metodzie lambdę, która zwraca prawdę, jeśli argument jest poprawnym numerem telefonu:
@@ -233,8 +242,7 @@ namespace lab_7_zadania
         //- każdy znak jest cyfrą
         public static Predicate<string> IsPhoneNumber()
         {
-            //usuń zgłoszenie wyjątku i wpisz rozwiązanie
-            throw new NotImplementedException();
+            return s => s.Length == 9 && s.All(c => char.IsDigit(c));
         }
         public static List<Person> LoadPeople(List<String> RawData, Predicate<string> validator)
         {
@@ -260,7 +268,7 @@ namespace lab_7_zadania
         //jeśli obie części zawierają poprawne dane to predykat zwarac true
         public static List<Person> ProcessPeople(List<String> data)
         {
-            return LoadPeople(data, null);
+            return LoadPeople(data, s => s.Split(" ").Length == 2 && s.Split(" ")[0].Length == 9 && int.Parse(s.Split(" ")[1]) >= 0);
         }
 
         //Zadanie 9
